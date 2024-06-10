@@ -47,3 +47,6 @@ group :development do
   # gem "spring"
 end
 
+gem "pry"
+
+gem 'json-schema'

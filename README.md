@@ -1,24 +1,40 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A prototype for creating dynamic content blocks which are based on a json schema
+that works together with ActiveRecord.
 
-Things you may want to cover:
+## Start
 
-* Ruby version
+```
+gem install bundler
+bundle
+bin/rails db:setup
+rails s
+```
 
-* System dependencies
+## List all content blocks
 
-* Configuration
+<http://localhost:3000/content_blocks>
 
-* Database creation
+## Get the schema for a content block
 
-* Database initialization
+<http://localhost:3000/content_blocks/:type/schema>
 
-* How to run the test suite
+## New content block with dynamic properties
 
-* Services (job queues, cache servers, search engines, etc.)
+<http://localhost:3000/content_blocks/new/:type>
 
-* Deployment instructions
+## Post content block
 
-* ...
+<http://localhost:3000/content_blocks/>
+
+```
+{
+  "content_block"=>{
+    "block_type"=>"tax_code",
+    "properties"=>{
+      "code"=>"32",
+      "explanation"=>"2"
+    }
+}
+```
