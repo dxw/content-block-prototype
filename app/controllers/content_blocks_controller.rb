@@ -28,7 +28,6 @@ class ContentBlocksController < ApplicationController
 
   def create
     block_type = params.require(:content_block).require(:block_type)
-    ContentBlockValidator.validate(block_type, properties)
     properties = content_block_params["properties"]
 
     @content_block = ContentBlock.new(block_type: block_type, properties: properties)
