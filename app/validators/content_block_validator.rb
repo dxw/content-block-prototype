@@ -1,9 +1,11 @@
 require 'json-schema'
 
+# TODO: Rename "validator" to something else
 class ContentBlockValidator
   EMAIL_ADDRESS_SCHEMA = Rails.root.join('config', 'schemas', 'email_address.json')
   TAX_CODE_SCHEMA = Rails.root.join('config', 'schemas', 'tax_code.json')
 
+  # TODO: Try a more complex content type?
   SCHEMAS = ActiveSupport::HashWithIndifferentAccess.new(
     'EmailAddress' => JSON.parse(File.read(EMAIL_ADDRESS_SCHEMA)),
     'TaxCode' => JSON.parse(File.read(TAX_CODE_SCHEMA))
