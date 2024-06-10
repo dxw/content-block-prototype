@@ -1,28 +1,16 @@
 require 'json-schema'
 
 class ContentBlockValidator
-  SCHEMAS = {
-    'EmailAddress' => {
-      type: 'email_address',
-      properties: {
-        email_address: { type: 'string', default: '' }
-      },
-      required: ['email_address']
-    },
-    'TaxCode' => {
-      type: 'tax_code',
-      properties: {
-        code: { type: 'string', default: '' },
-        explanation: { type: 'string', default: '' }
-      },
-      required: ['tax_code']
-    }
-    # Add more schemas for other ContentBlock types
-  }.freeze
+  EMAIL_ADDRESS_SCHEMA = Rails.root.join('config', 'schemas', 'email_address.json')
+  TAX_CODE_SCHEMA = Rails.root.join('config', 'schemas', 'tax_code.json')
 
   def self.validate(type, data)
     JSON::Validator.validate!(schema_for(type), data)
   end
+  SCHEMAS = ActiveSupport::HashWithIndifferentAccess.new(
+    'EmailAddress' => JSON.parse(File.read(EMAIL_ADDRESS_SCHEMA)),
+    'TaxCode' => JSON.parse(File.read(TAX_CODE_SCHEMA))
+  )
 
   def self.schema_for(type)
     camelType = type.split('_').map(&:capitalize).join

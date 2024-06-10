@@ -19,7 +19,8 @@ class ContentBlocksController < ApplicationController
     block_type = params.require(:block_type)
 
     @schema = ContentBlockValidator.schema_for(block_type)
-    permitted_params = params.permit(@schema[:properties].keys)
+
+    permitted_params = params.permit(@schema["properties"].keys)
 
     properties = ContentBlockValidator.default_properties(block_type).merge(permitted_params.to_h)
     @content_block = ContentBlock.new(block_type: block_type, properties: properties)
@@ -27,11 +28,11 @@ class ContentBlocksController < ApplicationController
 
   def create
     block_type = params.require(:content_block).require(:block_type)
-    properties = content_block_params[:properties]
-
     ContentBlockValidator.validate(block_type, properties)
+    properties = content_block_params["properties"]
 
     @content_block = ContentBlock.new(block_type: block_type, properties: properties)
+
     if @content_block.save
       render json: @content_block, status: :created
     else
@@ -49,6 +50,6 @@ class ContentBlocksController < ApplicationController
   end
 
   def content_block_params
-    params.require(:content_block).permit(:block_type, properties: {})
+    params.require(:content_block).permit("block_type", "properties" => {})
   end
 end
