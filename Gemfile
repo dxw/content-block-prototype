@@ -50,3 +50,5 @@ end
 gem "pry"
 
 gem 'json-schema'
+
+gem 'activerecord_json_validator', '~> 3.0.0'
